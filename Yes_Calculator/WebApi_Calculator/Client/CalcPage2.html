@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+        var sign="";
+
+        function ClickOp() {
+
+            sign = $(this).val(); // the sign
+        }
+
+        function calc() {
+            var num1 = parseFloat($('#number_1').val());//the first number
+            var num2 = parseFloat($('#number_2').val());//the second number
+            //var sign = $('#select_op').val(); // the sign
+
+
+            // call the ajax
+            $.ajax({
+
+                dataType: "json",			                         //סוג הנתונים שאנחנו מצפים לקבל מהשרת
+                url: "http://proj.ruppin.ac.il/bgroup41/ourproj/api/values/" + num1 + "/" + num2 + "/",			                 //הכתובת לשרת ולפונקציה
+                //url: "/api/values/",			                 //הכתובת לשרת ולפונקציה
+                contentType: "application/json; charset=utf-8",	   //סוג הנתונים שאנחנו שולחים לשרת
+                type: "PUT",				                         //סוג הפעולה
+                data: JSON.stringify(sign),			                 //הנתונים עצמם שאנחנו שולחים
+                success: function (data) {                       //פונקציה  שתופעל לאחר הצלחה
+                    $("#result").html(data); // print the result on span result
+                },
+                error: function () { }
+
+            });
+        }
+    </script>
+</head>
+<body>
+    <center>
+        <div style="margin:50px;">
+            <span>
+                <label for="num1">input first number: </label>
+                <input form="num1" type="text" id="number_1" />
+            </span>
+            <span>
+                <label for="num2">input second number: </label>
+                <input form="num2" type="text" id="number_2" />
+            </span>
+            <br />
+            <br />
+            <span>
+                <button id="btn_op1" onclick="ClickOp()">+</button>
+                <button id="btn_op2" onclick="ClickOp()">-</button>
+                <button id="btn_op3" onclick="ClickOp()">*</button>
+                <button id="btn_op4" onclick="ClickOp()">/</button>
+                <!--<input type="button" id="btn_op1" value="+" onclick="ClickOp()"/>-->
+                <!--<input type="button" id="btn_op2" value="-" onclick="ClickOp()" />-->
+                <!--<input type="button" id="btn_op3" value="*" onclick="ClickOp()" />-->
+                <!--<input type="button" id="btn_op4" value="/" onclick="ClickOp()" />-->
+                <br />
+                <br />
+                <input type="button" value="calculate" onclick="calc()" />
+            </span>
+            <br />
+            <br />
+            <span>
+                <label for="res">result:</label>
+                <span id="result" for="res"></span>
+            </span>
+        </div>
+</center>
+</body>
+</html>
