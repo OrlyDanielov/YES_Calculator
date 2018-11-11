@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>
+        function calc() {
+            var num1 = parseFloat($('#number_1').val());//the first number
+            var num2 = parseFloat($('#number_2').val());//the second number
+            var sign = $('#select_op').val(); // the sign
+            /*
+            var details = {
+                num1: num1,
+                num2: num2,
+                sign: sign
+            };
+            */
+
+            // call the ajax
+            $.ajax({
+
+                dataType: "json",			                         //סוג הנתונים שאנחנו מצפים לקבל מהשרת
+                url: "http://proj.ruppin.ac.il/bgroup41/ourproj/api/values/" + num1 + "/" + num2 + "/",			                 //הכתובת לשרת ולפונקציה
+                //url: "/api/values/",			                 //הכתובת לשרת ולפונקציה
+                contentType: "application/json; charset=utf-8",	   //סוג הנתונים שאנחנו שולחים לשרת
+                type: "PUT",				                         //סוג הפעולה		
+                data: JSON.stringify(sign),			                 //הנתונים עצמם שאנחנו שולחים
+                success: function (data) {                       //פונקציה  שתופעל לאחר הצלחה
+                    $("#result").html(data); // print the result on span result
+                },
+                error: function () { }
+
+            });
+        }
+    </script>
+</head >
+                <body>
+                    <div>
+                        <label for="num1">input number: </label>
+                        <input form="num1" type="text" id="number_1" />
+                        <label for="op">select opeartion: </label>
+                        <select id="select_op">
+                            <option id="op1" value="+">+</option>
+                            <option id="op2" value="-">-</option>
+                            <option id="op3" value="*">*</option>
+                            <option id="op4" value="/">/</option>
+                        </select>
+                        <label for="num2">input number: </label>
+                        <input form="num2" type="text" id="number_2" />
+                        <br />
+                        <br />
+                        <input type="button" value="calculate" onclick="calc()" />
+                        <label for="res">result:</label>
+                        <span id="result" for="res"></span>
+
+                    </div>
+
+                </body>
+</html >
